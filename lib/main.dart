@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/controllers/popular_product_controller.dart';
+import 'package:food_app/pages/home/food_page_body.dart';
 import 'package:food_app/pages/home/main_food_page.dart';
 import 'package:food_app/pages/product/popular_product_detail.dart';
 import 'package:food_app/pages/product/recommended_product_detail.dart';
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.find<PopularProductController>().getPopularProductList();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: MainFoodPage()
-      home: RecommendedProductDetail()
+      home: FoodPageBody()
     );
   }
 }
