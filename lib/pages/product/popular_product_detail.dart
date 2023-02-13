@@ -1,21 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:food_app/utils/dimensions.dart';
 import 'package:food_app/widgets/app_column.dart';
 import 'package:food_app/widgets/app_icon.dart';
 import 'package:food_app/widgets/expandable_text_widget.dart';
+import 'package:get/get.dart';
 
+import '../../controllers/popular_product_controller.dart';
+import '../../models/products_model.dart';
+import '../../routes/route_helper.dart';
+import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../widgets/big_text.dart';
-import '../../widgets/icon_and_text_widget.dart';
-import '../../widgets/small_text.dart';
+import '../home/main_food_page.dart';
 
 class PopularProductDetail extends StatelessWidget {
-  const PopularProductDetail({Key? key}) : super(key: key);
+  int pageId;
+  PopularProductDetail({Key? key, required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product = Get.find<PopularProductController>().popularProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -29,7 +34,10 @@ class PopularProductDetail extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage("assets/image/verypet.png"))),
+                        image: NetworkImage(
+                            AppConstants.BASE_URL+AppConstants.UPLOADS_URL+product.img!
+                        )
+                    )),
               )),
           Positioned(
               top: Dimensions.height45,
@@ -38,7 +46,12 @@ class PopularProductDetail extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AppIcon(icon: Icons.arrow_back_ios),
+                  GestureDetector(
+                      onTap: (){
+                        Get.toNamed(RouteHelper.initial);
+                        //Get.to(() => MainFoodPage());
+                      },
+                      child: AppIcon(icon: Icons.arrow_back_ios)),
                   AppIcon(icon: Icons.shopping_cart_checkout_outlined)
                 ],
               )),
@@ -61,11 +74,11 @@ class PopularProductDetail extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppColumn(text: "Comedouro VeryPet"),
+                    AppColumn(text: product.name!),
                     SizedBox(height: Dimensions.height20),
-                    BigText(text: "Sobre o alimentador"),
+                    BigText(text: "Sobre"),
                     SizedBox(height: Dimensions.height20),
-                    Expanded(child: SingleChildScrollView(child: ExpandableText(text: "Em algum momento durante o seu trabalho, um evento ou mesmo uma viagem, esteve preocupado com seu PET? Apresentamos o alimentador inteligente VeryPet, com ele você e seu pet terão total segurança e comodidade nos momentos em que estiverem distantes. Com este equipamento é possível alimentar e monitorar seu pet de forma totalmente remota. Através de seu smartphone, utilize o exclusivo app VeryPet  para visualizar, chamar, conversar, ouvir e alimentar seu pet à distância, com agendamento de refeições programadas. ")))
+                    Expanded(child: SingleChildScrollView(child: ExpandableText(text: product.description!)))
 
                   ],
                 )
@@ -103,7 +116,7 @@ class PopularProductDetail extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
-              child: BigText(text: "\$10 | Adicionar ao carrinho", color: Colors.white,),
+              child: BigText(text: "\$ ${product.price!} | Adicionar ao carrinho", color: Colors.white,),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radius20),
                 color: AppColors.mainColor
