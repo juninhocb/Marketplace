@@ -3,6 +3,7 @@ import 'package:food_app/controllers/cart_controller.dart';
 import 'package:food_app/data/repository/popular_product_repo.dart';
 import 'package:get/get.dart';
 
+import '../models/cart_model.dart';
 import '../models/products_model.dart';
 import '../utils/colors.dart';
 
@@ -52,6 +53,11 @@ class PopularProductController extends GetxController {
           colorText: Colors.white
       );
 
+      if(_inCartItems> 0){
+        _quantity = _inCartItems;
+        return _quantity;
+      }
+
       return 0;
     } else if(_inCartItems+quantity > 20){
       Get.snackbar(
@@ -83,10 +89,16 @@ class PopularProductController extends GetxController {
         print("The id is: " + value.id.toString() + "quantitiy " + value.quantity.toString());
       });
 
+      update();
+
   }
 
   int get totalItems{
     return _cart.getTotalItems;
+  }
+
+  List<CartModel> get getItems{
+    return _cart.getItems;
   }
 
 
