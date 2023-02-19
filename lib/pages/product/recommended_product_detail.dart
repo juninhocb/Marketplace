@@ -6,6 +6,10 @@ import 'package:food_app/utils/colors.dart';
 import 'package:food_app/utils/dimensions.dart';
 import 'package:food_app/widgets/expandable_text_widget.dart';
 import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+
+
 
 
 import '../../controllers/cart_controller.dart';
@@ -44,7 +48,14 @@ class RecommendedProductDetail extends StatelessWidget {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            Get.to(() => MainFoodPage());
+                            /*
+                            Fluttertoast.showToast(
+                              msg: "Carrinho vazio",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                            );*/
+                            Get.to(() => CartPage());
+
                           },
                           child: AppIcon(icon: Icons.shopping_cart_checkout_outlined)),
                       Get.find<PopularProductController>().totalItems >= 1 ?

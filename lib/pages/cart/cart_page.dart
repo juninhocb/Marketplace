@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
-import 'package:get/get.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class CartPage extends StatelessWidget {
               ],
           )),
           Positioned(
-              top: Dimensions.height20*5,
+              top: Dimensions.height20*6,
               left: Dimensions.width20,
               right: Dimensions.width20,
               bottom: 0,
@@ -79,12 +78,12 @@ class CartPage extends StatelessWidget {
                                     children: [
                                       BigText(text: controller.getItems[index].name!),
                                       SizedBox(height: Dimensions.height15,),
-                                      SmallText(text: "Text"),
+                                      SmallText(text: "Produto: " + controller.getItems[index].name!),
                                       SizedBox(height: Dimensions.height15,),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          BigText(text: "\$ ${controller.getItems[index].price!}}", color: Colors.red,),
+                                          BigText(text: "\$ ${controller.getItems[index].price!}", color: Colors.red,),
                                           Container(
                                             padding: EdgeInsets.only(top: Dimensions.height10/32, bottom: Dimensions.height10/32, left: Dimensions.width10/8, right: Dimensions.width10/8),
                                             decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/controllers/cart_controller.dart';
+import 'package:food_app/pages/cart/cart_page.dart';
 import 'package:food_app/utils/dimensions.dart';
 import 'package:food_app/widgets/app_column.dart';
 import 'package:food_app/widgets/app_icon.dart';
@@ -8,12 +9,10 @@ import 'package:food_app/widgets/expandable_text_widget.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/popular_product_controller.dart';
-import '../../models/products_model.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../widgets/big_text.dart';
-import '../home/main_food_page.dart';
 
 class PopularProductDetail extends StatelessWidget {
   int pageId;
@@ -57,7 +56,11 @@ class PopularProductDetail extends StatelessWidget {
                   GetBuilder<PopularProductController>(builder: (controllerProduct){
                     return Stack(
                       children: [
-                        AppIcon(icon: Icons.shopping_cart_checkout_outlined),
+                        GestureDetector(
+                            onTap: (){
+                              Get.to(() => CartPage());
+                            },
+                            child: AppIcon(icon: Icons.shopping_cart_checkout_outlined)),
                         Get.find<PopularProductController>().totalItems >= 1 ?
                         Positioned(
                             right: 0,
