@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/controllers/cart_controller.dart';
+import 'package:food_app/controllers/popular_product_controller.dart';
+import 'package:food_app/controllers/recommended_popular_controller.dart';
 import 'package:food_app/pages/home/main_food_page.dart';
 import 'package:food_app/widgets/app_icon.dart';
 import 'package:food_app/widgets/big_text.dart';
 import 'package:food_app/widgets/small_text.dart';
 import 'package:get/get.dart';
 
+import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
@@ -30,7 +33,7 @@ class CartPage extends StatelessWidget {
                 SizedBox(width: Dimensions.width20*5),
                 GestureDetector(
                     onTap: (){
-                      Get.to(() => MainFoodPage());
+                      Get.toNamed(RouteHelper.getInitial());
                     },
                     child: AppIcon(icon: Icons.home, iconColor: Colors.white, backgroundColor: AppColors.mainColor, iconSize: Dimensions.iconSize24)),
                 AppIcon(icon: Icons.shopping_cart, iconColor: Colors.white, backgroundColor: AppColors.mainColor, iconSize: Dimensions.iconSize24)
@@ -46,27 +49,45 @@ class CartPage extends StatelessWidget {
                   context: context,
                   removeTop: true,
                   child: GetBuilder<CartController>(builder: (controller){
+                    var _cartList = controller.getItems;
                     return ListView.builder(
-                        itemCount: controller.getItems.length,
+                        itemCount: _cartList.length,
                         itemBuilder: (_, index){
                           return Container(
                             width: double.maxFinite,
                             height: 100,
                             child:  Row(
                               children: [
-                                Container(
-                                  width: Dimensions.height20 *5,
-                                  height: Dimensions.height20 *5,
-                                  margin: EdgeInsets.only(bottom: Dimensions.height10),
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                              AppConstants.BASE_URL+AppConstants.UPLOADS_URL+controller.getItems[index].img!
-                                          )
-                                      ),
-                                      borderRadius: BorderRadius.circular(Dimensions.radius20),
-                                      color: Colors.white
+                                GestureDetector(
+                                  onTap: (){
+                                    var popularIndex = Get.find<PopularProductController>()
+                                        .popularProductList
+                                        .indexOf(_cartList[index].product!);
+                                    if (popularIndex >= 0){
+                                      Get.toNamed(RouteHelper.getPopularProduct(popularIndex));
+
+                                    } else {
+                                      var recommendedIndex = Get.find<RecommendedProductController>()
+                                          .recommendedProductList
+                                          .indexOf(_cartList[index].product!);
+                                      Get.toNamed(RouteHelper.getRecommendedProduct(recommendedIndex));
+                                    }
+
+                                  },
+                                  child: Container(
+                                    width: Dimensions.height20 *5,
+                                    height: Dimensions.height20 *5,
+                                    margin: EdgeInsets.only(bottom: Dimensions.height10),
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(
+                                                AppConstants.BASE_URL+AppConstants.UPLOADS_URL+controller.getItems[index].img!
+                                            )
+                                        ),
+                                        borderRadius: BorderRadius.circular(Dimensions.radius20),
+                                        color: Colors.white
+                                    ),
                                   ),
                                 ),
                                 Expanded(child: Container(
@@ -94,15 +115,15 @@ class CartPage extends StatelessWidget {
                                               children: [
                                                 GestureDetector(
                                                     onTap: (){
-                                                      //popularProduct.setQuantity(false);
+                                                      controller.addItem(_cartList[index].product!, -1);
                                                     },
                                                     child: Icon(Icons.remove, color: AppColors.signcolor)),
                                                 SizedBox(width: Dimensions.width10/2,),
-                                                BigText(text: "0"),
+                                                BigText(text: _cartList[index].quantity.toString()!),
                                                 SizedBox(width: Dimensions.width10/2,),
                                                 GestureDetector(
                                                     onTap: (){
-                                                      //popularProduct.setQuantity(true);
+                                                      controller.addItem(_cartList[index].product!, 1);
 
                                                     },
                                                     child: Icon(Icons.add, color: AppColors.signcolor))
@@ -124,6 +145,45 @@ class CartPage extends StatelessWidget {
             ))
         ],
       ),
+      bottomNavigationBar: GetBuilder<CartController>(builder: (controller){
+        return Container(
+          height: Dimensions.bottomHeightBar,
+          padding: EdgeInsets.only(top: Dimensions.height30, left: Dimensions.width20, bottom: Dimensions.height30, right: Dimensions.width20),
+          decoration: BoxDecoration(
+              color: AppColors.buttonBackgroundColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(Dimensions.radius20*2),
+                  topRight: Radius.circular(Dimensions.radius20*2)
+              )
+          ),
+          child: Row(
+            mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                    color: Colors.white
+                ),
+                child: BigText(text: " Valor total: R\$ ${controller.totalAmount.toString()}"),
+              ),
+              GestureDetector(
+                onTap: (){
+                  //popularProduct.addItem(product);
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
+                  child: BigText(text: "Confirmar ", color: Colors.white,),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimensions.radius20),
+                      color: AppColors.mainColor
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 }

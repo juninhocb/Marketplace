@@ -26,7 +26,8 @@ class CartController extends GetxController {
             img: value.img,
             quantity: value.quantity! + quantityParam,
             isExist: true,
-            time: DateTime.now().toString()
+            time: DateTime.now().toString(),
+            product: product,
         );
 
       });
@@ -46,7 +47,8 @@ class CartController extends GetxController {
               img: product.img,
               quantity: quantityParam,
               isExist: true,
-              time: DateTime.now().toString()
+              time: DateTime.now().toString(),
+              product: product
           );});
       }else {
         Get.snackbar(
@@ -56,7 +58,7 @@ class CartController extends GetxController {
         );
       }
     }
-    
+    update();
     
 
 
@@ -97,5 +99,16 @@ class CartController extends GetxController {
       return e.value;
     }).toList();
   }
+
+  int get totalAmount {
+
+    var total = 0;
+    _items.forEach((key, value) {
+      total += value.quantity! * value.price!;
+    });
+
+    return total;
+  }
+
 }
 

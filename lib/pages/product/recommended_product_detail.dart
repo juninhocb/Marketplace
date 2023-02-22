@@ -54,7 +54,7 @@ class RecommendedProductDetail extends StatelessWidget {
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                             );*/
-                            Get.to(() => CartPage());
+                            Get.toNamed(RouteHelper.getCartPage());
 
                           },
                           child: AppIcon(icon: Icons.shopping_cart_checkout_outlined)),
@@ -64,7 +64,7 @@ class RecommendedProductDetail extends StatelessWidget {
                           top: 0,
                           child: GestureDetector(
                               onTap: (){
-                                Get.to(() => CartPage());
+                                Get.toNamed(RouteHelper.getCartPage());
                               } ,
                               child: AppIcon(icon: Icons.circle, size: 16, iconColor: Colors.transparent, backgroundColor: AppColors.mainColor))) :
                       Container(),
