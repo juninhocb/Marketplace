@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/controllers/popular_product_controller.dart';
 import 'package:food_app/controllers/recommended_popular_controller.dart';
-import 'package:food_app/pages/splash/splash_page.dart';
 import 'package:food_app/routes/route_helper.dart';
 import 'package:get/get.dart';
 import 'package:food_app/helper/dependencies.dart' as dep;
