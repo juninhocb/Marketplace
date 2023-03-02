@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/pages/cart/cart_history.dart';
 import 'package:food_app/pages/home/main_food_page.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -28,7 +29,7 @@ class HomePage extends StatefulWidget {
       return [
         MainFoodPage(),
         Container(child: Text("1st"),),
-        Container(child: Text("2nd"),),
+        CartHistory(),
         Container(child: Text("3rd"),)
       ];
     }

@@ -15,12 +15,14 @@ class RouteHelper{
   static const String popularProduct = "/popular-product";
   static const String recommendedProduct = "/recommended-product";
   static const String cartPage = "/cart-page";
+  static const String cartHistoryPage = "/cart-history-page";
 
   static String getSplashPage ()=> '$splashPage';
   static String getInitial () => '$initial';
   static String getPopularProduct(int pageId) => '$popularProduct?pageId=$pageId';
   static String getRecommendedProduct(int pageId) => '$recommendedProduct?pageId=$pageId';
   static String getCartPage() => '$cartPage';
+  static String getHistoryCartPage() => '$cartHistoryPage';
 
   static List<GetPage> routes = [
     GetPage(name: splashPage, page: () => SplashScreen()),
