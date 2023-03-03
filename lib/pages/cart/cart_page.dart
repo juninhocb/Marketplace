@@ -55,7 +55,7 @@ class CartPage extends StatelessWidget {
                         itemBuilder: (_, index){
                           return Container(
                             width: double.maxFinite,
-                            height: 100,
+                            height: Dimensions.height20*5,
                             child:  Row(
                               children: [
                                 GestureDetector(
@@ -169,6 +169,7 @@ class CartPage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: (){
+                  //print(controller.getItems.length);
                   controller.addToHistory();
                 },
                 child: Container(

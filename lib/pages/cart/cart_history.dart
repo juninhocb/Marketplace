@@ -38,7 +38,8 @@ class CartHistory extends StatelessWidget {
     }
 
     List<int> itemsPerOrder = cartOrderTimeToList();
-
+    print("ITEMS");
+    print(itemsPerOrder);
     var listCounter = 0;
     
     return Scaffold(
@@ -72,6 +73,7 @@ class CartHistory extends StatelessWidget {
                     //carItemsPerOrder.length
                     for (int i = 0; i < itemsPerOrder.length; i++)
                       Container(
+                        margin: EdgeInsets.only(bottom: Dimensions.height20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                            children: [
@@ -114,7 +116,7 @@ class CartHistory extends StatelessWidget {
                                     children: [
                                       SmallText(text: "Total", color: AppColors.titleColor),
                                       SizedBox(height: Dimensions.height10,),
-                                      BigText(text: (itemsPerOrder.length + 1).toString() + " Items", color: AppColors.titleColor,),
+                                      BigText(text: (itemsPerOrder[i] == 1 ? itemsPerOrder[i].toString() + " Item " : itemsPerOrder[i].toString() + " Items "), color: AppColors.titleColor,),
                                       SizedBox(height: Dimensions.height10,),
                                       Container(
                                         padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.width10/2),
@@ -131,7 +133,6 @@ class CartHistory extends StatelessWidget {
                             )
                           ],
                         ),
-                        margin: EdgeInsets.only(bottom: Dimensions.height20),
                       )
 
 

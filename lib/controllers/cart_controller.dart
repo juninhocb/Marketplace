@@ -14,7 +14,6 @@ class CartController extends GetxController {
   Map<int, CartModel> get items => _items;
   List<CartModel> storageItems = [];
 
-
   void addItem(ProductModel product, int quantityParam){
     var totalQuantity = 0;
     if(_items.containsKey(product.id!)){
@@ -115,6 +114,7 @@ class CartController extends GetxController {
 
   List<CartModel> getCartData(){
     setCart = cartRepo.getCartList();
+    cartRepo.initCart();
     return storageItems;
   }
 
